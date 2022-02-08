@@ -1,13 +1,38 @@
 # verify-minify-json
 
 Tools to verify and minify JSON files
+<br><br><br>
+
+# Installation:
+
+<h2>1. Download repository:</h2>
 
 ---
+ &nbsp;<i>Access /usr/local/bin:</i><br>
+ &nbsp;cd /usr/local/bin
+
+---
+ &nbsp;<i>Use git clone as superuser to download the repository:</i><br>
+ &nbsp;sudo git clone https://github.com/tomasfn87/verify-minify-json
+<br><br>
+
+<h2>2. Add aliases to your alias file for quick access:</h2>
+
+---
+ &nbsp;<i>Open your alias file ('~/.bash_aliases',  '~/.zshrc') and add the aliases above:</i><br>
+
+---
+ &nbsp;alias vjson='/usr/local/bin/verify-minify-json//verify_json.sh'<br>
+ &nbsp;alias mjson='/usr/local/bin/verify-minify-json//minify_json.sh'<br>
+ &nbsp;alias mjsoni='/usr/local/bin/verify-minify-json//minify_json_interactive.sh'
+
+<br><br>
 # 1) verify_json.sh
   * receives one argument via CLI: a JSON file path, and checks if file extension is '.json'; if true, verifies if the content is valid JSON data
 
 ---
   * Example: <strong>./verify_json.sh sample.json</strong>
+  * Example (alias): <strong>vjson sample.json</strong>
 
 ---
 # 2) minify_json.sh
@@ -20,6 +45,7 @@ Tools to verify and minify JSON files
 
 ---
   * Example: <strong>./minify_json.sh sample.json sample.min.json</strong>
+  * Example (alias): <strong>mjson sample.json sample.min.json</strong>
 
 ---
 # 3) minify_json_interactive.sh
@@ -30,5 +56,4 @@ Tools to verify and minify JSON files
 
 ---
   * Example: <strong>./minify_json_interactive.sh</strong>
-
----
+  * Example (alias): <strong>mjsoni</strong>
