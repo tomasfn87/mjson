@@ -13,7 +13,7 @@ toYellow () { gawk -v text=$1 'BEGIN {
 }
 
 verifyJson () {
-  echo $(python3 verify_json.py $1);
+  echo $(python3 /usr/local/bin/verify-minify-json/verify_json.py $1);
 }
 
 openJson () {
@@ -120,7 +120,7 @@ then
 fi;
 
 echo -n " * Minifying JSON file...               "
-python3 minify.py $JSONFILE | cat > $MINIFIEDJSON;
+python3 /usr/local/bin/verify-minify-json/minify.py $JSONFILE | cat > $MINIFIEDJSON;
 echo "[$(toGreen OK)]";
 
 echo -n " * Checking minified output file...     "

@@ -20,6 +20,6 @@ then
 fi;
 
 echo "Minifying file..."
-python3 minify.py $1 | cat > $2;
+python3 /usr/local/bin/verify-minify-json/minify.py $1 | cat > $2;
 echo "$(toGreen DONE)". "File saved to $(toYellow $2)";
 exit 0;

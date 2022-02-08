@@ -13,7 +13,7 @@ toRed () {
 }
 
 verifyJson () {
-  echo $(python3 verify_json.py $1)
+  echo $(python3 /usr/local/bin/verify-minify-json/verify_json.py $1)
 }
 
 echo -n " * Checking if file exists...           "
