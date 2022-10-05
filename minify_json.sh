@@ -1,7 +1,7 @@
 #!/bin/bash
 
 toGreen () { gawk -v text=$1 'BEGIN {
-  printf "%s", "\033[1;32m" text "\033[0m" }' 
+  printf "%s", "\033[1;32m" text "\033[0m" }'
 }
 
 toRed () { gawk -v text=$1 'BEGIN {
@@ -13,7 +13,7 @@ toYellow () { gawk -v text=$1 'BEGIN {
 }
 
 verifyJson () {
-  echo $(python3 /usr/local/bin/verify-minify-json/verify_json.py $1)
+  echo $(python3 /usr/local/lib/verify-minify-json/verify_json.py $1)
 }
 
 INPUT="$1";
@@ -42,12 +42,12 @@ then
   echo "Not a JSON file; please choose a JSON file ('$(toYellow file.json)')";
   exit 1;
 elif [ $(verifyJson $INPUT) == 2 ];
-then 
+then
   echo "$(toRed ERROR)";
   echo "Invalid JSON data; please choose a valid JSON file";
   exit 2;
 else
-  echo "[$(toGreen OK)]"; 
+  echo "[$(toGreen OK)]";
 fi;
 
 if [[ $OUTPUT == "" || $OUTPUT == " " ]]
@@ -77,11 +77,11 @@ then
     exit 4;
   fi;
 else
-  echo "[$(toGreen OK)]";  
+  echo "[$(toGreen OK)]";
 fi;
 
 echo -n " * Minifying JSON file...               "
-python3 /usr/local/bin/verify-minify-json/minify.py $INPUT | cat > $OUTPUT;
+python3 /usr/local/lib/verify-minify-json/minify.py $INPUT | cat > $OUTPUT;
 echo "[$(toGreen OK)]";
 
 echo -n " * Checking output file...              "

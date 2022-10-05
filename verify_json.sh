@@ -13,7 +13,7 @@ toRed () {
 }
 
 verifyJson () {
-  echo $(python3 /usr/local/bin/verify-minify-json/verify_json.py $1)
+  echo $(python3 /usr/local/lib/verify-minify-json/verify_json.py $1)
 }
 
 echo -n " * Checking if file exists...           "
@@ -25,7 +25,7 @@ else
   exit 3;
 fi;
 
-echo -n " * Checking JSON file integrity...      " 
+echo -n " * Checking JSON file integrity...      "
 if [ $(verifyJson $1) == 0 ];
 then
   echo "[$(toGreen OK)]";

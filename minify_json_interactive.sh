@@ -13,7 +13,7 @@ toYellow () { gawk -v text=$1 'BEGIN {
 }
 
 verifyJson () {
-  echo $(python3 /usr/local/bin/verify-minify-json/verify_json.py $1);
+  echo $(python3 /usr/local/lib/verify-minify-json/verify_json.py $1);
 }
 
 openJson () {
@@ -35,7 +35,7 @@ openJson () {
     echo; echo "Please choose a JSON file ('$(toYellow file.json)'):";
     return 1;
   elif [ $(verifyJson $1) == 2 ];
-  then 
+  then
     echo "$(toRed ERROR): invalid JSON data";
     echo; echo "Please choose a valid JSON file:";
     return 2
@@ -68,7 +68,7 @@ do
   then
     echo; echo "$(toRed ERROR): minified JSON file extension must be '.json'";
     echo; echo "Please change the file extension to '$(toYellow .json)':";
-    read -ei "$(echo $MINIFIEDJSON)" MINIFIEDJSON;  
+    read -ei "$(echo $MINIFIEDJSON)" MINIFIEDJSON;
   fi;
 done;
 
@@ -120,7 +120,7 @@ then
 fi;
 
 echo -n " * Minifying JSON file...               "
-python3 /usr/local/bin/verify-minify-json/minify.py $JSONFILE | cat > $MINIFIEDJSON;
+python3 /usr/local/lib/verify-minify-json/minify.py $JSONFILE | cat > $MINIFIEDJSON;
 echo "[$(toGreen OK)]";
 
 echo -n " * Checking minified output file...     "
