@@ -12,7 +12,7 @@ toYellow () { gawk -v text=$1 'BEGIN {
     printf "%s", "\033[1;33m" text "\033[0m" }'
 }
 
-if [ $1 == $2 ]
+if [ "$1" == "$2" ]
 then
     echo "$(toRed ERROR): cannot overwrite source file $(toYellow $2)";
     echo "Please rename the minified file or save it to another folder";
@@ -20,6 +20,6 @@ then
 fi;
 
 echo "Minifying file..."
-python3 /usr/local/lib/verify-minify-json/minify.py $1 | cat > $2;
+python3 /usr/local/lib/verify-minify-json/minify.py "$1" | cat > "$2";
 echo "$(toGreen DONE)". "File saved to $(toYellow $2)";
 exit 0;

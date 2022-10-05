@@ -13,12 +13,12 @@ toYellow () { gawk -v text=$1 'BEGIN {
 }
 
 verifyJson () {
-  echo $(python3 /usr/local/lib/verify-minify-json/verify_json.py $1);
+  echo $(python3 /usr/local/lib/verify-minify-json/verify_json.py "$1");
 }
 
 openJson () {
   echo -n " * Checking if source file exists...    "
-  if [ -r $1 ];
+  if [ -r "$1" ];
   then
     echo "[$(toGreen OK)]";
   else
@@ -29,12 +29,12 @@ openJson () {
 
   echo -n " * Checking JSON file integrity...      ";
 
-  if [ $(verifyJson $1) == 1 ];
+  if [ $(verifyJson "$1") == 1 ];
   then
     echo "$(toRed ERROR): not a JSON file";
     echo; echo "Please choose a JSON file ('$(toYellow file.json)'):";
     return 1;
-  elif [ $(verifyJson $1) == 2 ];
+  elif [ $(verifyJson "$1") == 2 ];
   then
     echo "$(toRed ERROR): invalid JSON data";
     echo; echo "Please choose a valid JSON file:";

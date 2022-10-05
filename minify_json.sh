@@ -13,7 +13,7 @@ toYellow () { gawk -v text=$1 'BEGIN {
 }
 
 verifyJson () {
-  echo $(python3 /usr/local/lib/verify-minify-json/verify_json.py $1)
+  echo $(python3 /usr/local/lib/verify-minify-json/verify_json.py "$1")
 }
 
 INPUT="$1";

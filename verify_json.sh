@@ -13,11 +13,11 @@ toRed () {
 }
 
 verifyJson () {
-  echo $(python3 /usr/local/lib/verify-minify-json/verify_json.py $1)
+  echo $(python3 /usr/local/lib/verify-minify-json/verify_json.py "$1")
 }
 
 echo -n " * Checking if file exists...           "
-if [ -f $1 ];
+if [ -f "$1" ];
 then
   echo "[$(toGreen OK)]";
 else
@@ -26,11 +26,11 @@ else
 fi;
 
 echo -n " * Checking JSON file integrity...      "
-if [ $(verifyJson $1) == 0 ];
+if [ $(verifyJson "$1") == 0 ];
 then
   echo "[$(toGreen OK)]";
   exit 0;
-elif [ $(verifyJson $1) == 1 ];
+elif [ $(verifyJson "$1") == 1 ];
 then
   echo "$(toRed ERROR): not a JSON file";
   exit 1;
