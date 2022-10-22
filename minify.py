@@ -26,7 +26,7 @@ def cleanSpacesOutside(text):
 def minify(file):
     with open(file, "r") as fh:
         fileContent = fh.read()
-    
+
     print(cleanSpacesOutside(fileContent))
 
 if __name__ == "__main__":

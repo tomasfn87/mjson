@@ -59,10 +59,10 @@ mjson /home/user/json_files/sample.json /home/user/json_files/sample.min.json
 
 ---
 ## 3) minify_json_interactive.sh
-  * does basically the same thing as 2), but in an interactive manner; no arguments are received via CLI: the script simply runs and all the necessary data must be typed step-by-step
+  * does basically the same thing as 2), but in an interactive manner; no arguments can be passed when running the 'mjsoni' command: the script will prompt for the input and output files
   * it the target file already exists, the user is asked if it should be overwritten; if answer is No, it will prompt for a new file name, and won't allow the file to be saved in the same folder, asking the user to either rename it or save it to another folder
   * if there's an error, the script warns the user and prompts for a correct option until one is provided
-  * use 'CTRL + C' (keyboard interrupt) to leave the script or 'CTRL + Z' to minimize it (return to background process with 'fg')
+  * use `CTRL + C` (keyboard interrupt) to leave the script or `CTRL + Z` to minimize it (return to background process with `fg`)
 
 
 #### Sample CLI usage:
