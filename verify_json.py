@@ -1,14 +1,12 @@
 import json
+import re
+import sys
 
 def isExtensionJson(file):
-    if len(file) < 6:
+    if not file:
         return False
-    fileExtension = ""
-    for i in range(-5, 0):
-        fileExtension += file[i]
-    if fileExtension != ".json":
-        return False
-    return True
+    REJsonExtension = r"\.json$"
+    return bool(re.search(REJsonExtension, file))
 
 def verify(file):
     if not isExtensionJson(file):
@@ -30,5 +28,4 @@ def verify(file):
         return 2
 
 if __name__ == "__main__":
-    import sys
-    print(verify(str(sys.argv[1])))
+    print(verify(sys.argv[1]))
