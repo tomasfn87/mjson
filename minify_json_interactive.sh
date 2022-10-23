@@ -1,14 +1,14 @@
 #!/bin/bash
 
-toGreen () { gawk -v text="$1" 'BEGIN {
+toGreen() { gawk -v text="$1" 'BEGIN {
     printf "%s", "\033[1;32m" text "\033[0m" }';
 }
 
-toRed () { gawk -v text="$1" 'BEGIN {
+toRed() { gawk -v text="$1" 'BEGIN {
     printf "%s", "\033[1;31m" text "\033[0m" }';
 }
 
-toYellow () { gawk -v text="$1" 'BEGIN {
+toYellow() { gawk -v text="$1" 'BEGIN {
     printf "%s", "\033[1;33m" text "\033[0m" }';
 }
 
@@ -28,7 +28,7 @@ openJson() {
     echo -n " * Checking if source file exists...    ";
 
     if [[ ${1:0:2} == "~/" ]]; then
-    MINIFIEDJSON=$(parseHomeFrom~ $MINIFIEDJSON); fi;
+        MINIFIEDJSON=$(parseHomeFrom~ $MINIFIEDJSON); fi;
 
     if [ -r `realpath -q "$1"` ]; then
         echo "[`toGreen OK`]";
@@ -54,7 +54,7 @@ openJson() {
 
 echo "Choose JSON file to be minified:";
 read -ei "$(echo )" JSONFILE;
-openJson "$JSONFILE"
+openJson "$JSONFILE";
 
 while [ $? != 0 ]; do
     read -ei "$(echo "$JSONFILE")" JSONFILE;
@@ -85,7 +85,7 @@ else
 if [[ $HOME_SHORTCUT == 0 ]]; then
     MINIFIEDJSON=$(parseHomeFrom~ $MINIFIEDJSON); fi;
 
-echo; echo -n " * Checking if target file exists...    "
+echo; echo -n " * Checking if target file exists...    ";
 
 if [ -w $(realpath -q "$MINIFIEDJSON") ]; then
     echo "[$(toGreen OK)]";
@@ -105,9 +105,9 @@ if [ -w $(realpath -q "$MINIFIEDJSON") ]; then
     elif [[ "${NO[*]} " =~ "${OPTION}" ]]; then
         NEWFILE="$MINIFIEDJSON";
         while [[ "$NEWFILE" == "$MINIFIEDJSON" || -w $(realpath -q "$NEWFILE") ]]; do
-            echo; echo "Save minified JSON file to: "
+            echo; echo "Save minified JSON file to: ";
             if [[ $HOME_SHORTCUT == 0 ]]; then
-            NEWFILE=$(parse~FromHome $NEWFILE); fi;
+                NEWFILE=$(parse~FromHome $NEWFILE); fi;
             read -ei $(echo "$NEWFILE") NEWFILE;
             if [[ ${NEWFILE:0:2} == "~/" ]]; then
                 HOME_SHORTCUT=0;
@@ -122,10 +122,8 @@ if [ -w $(realpath -q "$MINIFIEDJSON") ]; then
             else
                 break; fi; done;
 
-        # touch "$(realpath -q "$NEWFILE")";
         while [ $(verifyJson "$NEWFILE") == 1 ]; do
             echo; echo "$(toRed ERROR): minified JSON file extension must be '$(toYellow .json)'";
-            # rm "$NEWFILE";
             echo; echo "Please rename the target minified file or save it to another folder:";
             read -ei $(echo "$NEWFILE") NEWFILE;
             if [[ ${NEWFILE:0:2} == "~/" ]]; then
@@ -145,12 +143,12 @@ elif [ ! -f "$(realpath -q "$MINIFIEDJSON")" ]; then
     echo " * File will be created..."
     touch "$(realpath -q $MINIFIEDJSON)"; fi;
 
-JSONFILE=$(parseHomeFrom~ "$JSONFILE")
+JSONFILE=$(parseHomeFrom~ "$JSONFILE");
 echo; echo -n " * Minifying JSON file...               "
 python3 /usr/local/lib/verify-minify-json/minify.py "$(realpath -q "$JSONFILE")" | cat > "$(realpath -q "$MINIFIEDJSON")";
 echo "[$(toGreen OK)]";
 
-echo -n " * Checking minified output file...     "
+echo -n " * Checking minified output file...     ";
 if [ $(verifyJson "$MINIFIEDJSON") != 0 ]; then
     echo "$(toRed ERROR): minified JSON validation failed";
 else

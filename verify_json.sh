@@ -1,18 +1,18 @@
 #!/bin/bash
 
-toGreen () { gawk -v text="$1" 'BEGIN {
+toGreen() { gawk -v text="$1" 'BEGIN {
     printf "%s", "\033[1;32m" text "\033[0m"}';
 }
 
-toRed () { gawk -v text="$1" 'BEGIN {
+toRed() { gawk -v text="$1" 'BEGIN {
     printf "%s", "\033[1;31m" text "\033[0m" }';
 }
 
-verifyJson () {
+verifyJson() {
     echo $(python3 /usr/local/lib/verify-minify-json/verify_json.py "$1");
 }
 
-echo -n " * Checking if file exists...           "
+echo -n " * Checking if file exists...           ";
 if [ -f "$1" ]; then
     echo "[$(toGreen OK)]";
 else
