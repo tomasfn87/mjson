@@ -54,14 +54,23 @@ openJson () {
   fi;
 }
 
+
 echo "Choose JSON file to be minified:";
 read -ei "$(echo )" JSONFILE;
 openJson "$JSONFILE"
+
+
 while [ $? != 0 ];
 do
   read -ei "$(echo "$JSONFILE")" JSONFILE;
   openJson "$JSONFILE";
 done;
+
+HOME_SHORTCUT=1;
+if [[ ${JSONFILE:0:2} == "~/" ]];
+then
+    HOME_SHORTCUT=0;
+fi;
 
 echo; echo "Save minified JSON file to:";
 read -ei "$JSONFILE" MINIFIEDJSON;
@@ -81,7 +90,17 @@ do
   fi;
 done;
 
-MINIFIEDJSON=$(parseHomeFrom~ $MINIFIEDJSON);
+if [[ ${MINIFIEDJSON:0:2} == "~/" ]];
+then
+    HOME_SHORTCUT=0;
+else
+    HOME_SHORTCUT=1;
+fi;
+if [[ $HOME_SHORTCUT == 0 ]];
+then
+  MINIFIEDJSON=$(parseHomeFrom~ $MINIFIEDJSON);
+fi;
+
 echo; echo -n " * Checking if target file exists...    "
 
 if [ -w $(realpath -q "$MINIFIEDJSON") ];
@@ -101,18 +120,32 @@ then
   elif [[ "${NO[*]} " =~ "${OPTION}" ]];
   then
     NEWFILE="$MINIFIEDJSON";
-    NEWFILE="$(parseHomeFrom~ $NEWFILE)";
     while [[ "$NEWFILE" == "$MINIFIEDJSON" || -w $(realpath -q "$NEWFILE") ]];
     do
       echo; echo "Save minified JSON file to: "
-      read -ei $(echo $(parse~FromHome "$NEWFILE")) NEWFILE;
-      NEWFILE="$(parseHomeFrom~ $NEWFILE)";
+
+      if [[ $HOME_SHORTCUT == 0 ]];
+      then
+        NEWFILE=$(parse~FromHome $NEWFILE);
+      fi;
+      read -ei $(echo "$NEWFILE") NEWFILE;
+
+      if [[ ${NEWFILE:0:2} == "~/" ]]; then
+        HOME_SHORTCUT=0;
+      else
+        HOME_SHORTCUT=1;
+      fi;
+      if [[ $HOME_SHORTCUT == 0 ]];
+      then
+        NEWFILE="$(parseHomeFrom~ $NEWFILE)";
+      fi;
+
       if [[ "$NEWFILE" == "$MINIFIEDJSON" || -w $(realpath -q "$NEWFILE") ]];
       then
-        echo; echo "`toRed ERROR`: files already exists and overwriting disabled.";
+        echo; echo "`toRed ERROR`: files already exists and overwriting is disabled.";
         echo "Please rename the file or save it to another folder:";
       else
-        break;
+        break
       fi;
     done;
     touch "$(realpath -q "$NEWFILE")";
@@ -122,7 +155,15 @@ then
       rm "$NEWFILE";
       echo; echo "Please rename the target minified file or save it to another folder:";
       read -ei $(echo "$NEWFILE") NEWFILE;
-      NEWFILE=$(parseHomeFrom~ $NEWFILE);
+
+      if [[ ${NEWFILE:0:2} == "~/" ]]; then
+        HOME_SHORTCUT=0;
+      fi;
+      if [[ $HOME_SHORTCUT == 0 ]];
+      then
+        NEWFILE="$(parseHomeFrom~ $NEWFILE)";
+      fi;
+
       touch $(realpath -q "$NEWFILE");
     done;
     echo; echo " * File will be created...";
