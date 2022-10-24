@@ -9,18 +9,18 @@ toRed() { gawk -v text="$1" 'BEGIN {
 }
 
 verifyJson() {
-    echo $(python3 /usr/local/lib/verify-minify-json/verify_json.py "$1");
+    echo `python3 /usr/local/lib/verify-minify-json/verify_json.py "$1"`;
 }
 
 echo -n " * Checking if file exists...           ";
 if [ -f "$1" ]; then
-    echo "[$(toGreen OK)]";
+    echo "[`toGreen OK`]";
 else
-    echo "$(toRed ERROR): file not found";
+    echo "`toRed ERROR`: file not found";
     exit 3; fi;
 
 echo -n " * Checking JSON file integrity...      ";
-if [ $(verifyJson "$1") == 0 ]; then
+if [ `verifyJson "$1"` == 0 ]; then
     echo "[`toGreen OK`]";
     exit 0;
 elif [ `verifyJson "$1"` == 1 ]; then

@@ -13,7 +13,7 @@ toYellow() { gawk -v text="$1" 'BEGIN {
 }
 
 verifyJson() {
-    echo $(python3 /usr/local/lib/verify-minify-json/verify_json.py "$1");
+    echo `python3 /usr/local/lib/verify-minify-json/verify_json.py "$1"`;
 }
 
 INPUT="$1";
@@ -21,35 +21,35 @@ OUTPUT="$2";
 NEW_FILE=maybe;
 
 if [ "$OUTPUT" == "$INPUT" ]; then
-    echo "$(toRed ERROR): source file and output file cannot be the same";
+    echo "`toRed ERROR`: source file and output file cannot be the same";
     exit 3; fi;
 
 echo -n " * Checking if source file exists...    ";
 if [ -f "$INPUT" ]; then
-    echo "[$(toGreen OK)]";
+    echo "[`toGreen OK`]";
 else
-    echo "$(toRed ERROR): file not found";
+    echo "`toRed ERROR`: file not found";
     exit 6; fi;
 
 echo -n " * Checking source file integrity...    ";
-if [ $(verifyJson "$INPUT") == 1 ]; then
-    echo "$(toRed ERROR)";
-    echo "Not a JSON file; please choose a JSON file ('$(toYellow file.json)')";
+if [ `verifyJson "$INPUT"` == 1 ]; then
+    echo "`toRed ERROR`";
+    echo "Not a JSON file; please choose a JSON file ('`toYellow file.json`')";
     exit 1;
-elif [ $(verifyJson "$INPUT") == 2 ]; then
-    echo "$(toRed ERROR)";
+elif [ `verifyJson "$INPUT"` == 2 ]; then
+    echo "`toRed ERROR`";
     echo "Invalid JSON data; please choose a valid JSON file";
     exit 2;
 else
-    echo "[$(toGreen OK)]"; fi;
+    echo "[`toGreen OK`]"; fi;
 
 if [[ "$OUTPUT" == "" || "$OUTPUT" == " " ]]; then
-    echo "$(toRed ERROR): please specify minified JSON path";
+    echo "`toRed ERROR`: please specify minified JSON path";
     exit 5; fi;
 
 echo -n " * Checking if target file exists...    ";
 if [ -w "$OUTPUT" ]; then
-    echo "[$(toGreen OK)] File will be overwritten...";
+    echo "[`toGreen OK`] File will be overwritten...";
 else
     touch "$OUTPUT";
     NEW_FILE=yes;
@@ -63,15 +63,15 @@ if [ `verifyJson "$OUTPUT"` == 1 ]; then
         rm "$OUTPUT";
         exit 4; fi;
 else
-    echo "[$(toGreen OK)]"; fi;
+    echo "[`toGreen OK`]"; fi;
 
 echo -n " * Minifying JSON file...               ";
 python3 /usr/local/lib/verify-minify-json/minify.py "$INPUT" | cat > "$OUTPUT";
-echo "[$(toGreen OK)]";
+echo "[`toGreen OK`]";
 
 echo -n " * Checking output file...              ";
 if [ $(verifyJson "$OUTPUT") != 0 ]; then
-    echo "$(toRed ERROR)";
+    echo "`toRed ERROR`";
     echo "Minified JSON validation failed";
 else
     echo "[`toGreen OK`]";

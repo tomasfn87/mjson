@@ -28,7 +28,7 @@ openJson() {
     echo -n " * Checking if source file exists...    ";
 
     if [[ ${1:0:2} == "~/" ]]; then
-        MINIFIEDJSON=$(parseHomeFrom~ $MINIFIEDJSON); fi;
+        MINIFIEDJSON=`parseHomeFrom~ $MINIFIEDJSON`; fi;
 
     if [ -r `realpath -q "$1"` ]; then
         echo "[`toGreen OK`]";
@@ -41,7 +41,7 @@ openJson() {
 
     if [ `verifyJson "realpath -q $1"` == 1 ]; then
         echo "`toRed ERROR`: not a JSON file";
-        echo; echo "Please choose a JSON file ($(toYellow file.json)):";
+        echo; echo "Please choose a JSON file (`toYellow file.json`):";
         return 1;
     elif [ `verifyJson "$1"` == 2 ]; then
         echo "`toRed ERROR`: invalid JSON data";
@@ -57,19 +57,19 @@ read -ei "$(echo )" JSONFILE;
 openJson "$JSONFILE";
 
 while [ $? != 0 ]; do
-    read -ei "$(echo "$JSONFILE")" JSONFILE;
+    read -ei "`echo "$JSONFILE"`" JSONFILE;
 openJson "$JSONFILE"; done;
 
 HOME_SHORTCUT=1;
 if [[ ${JSONFILE:0:2} == "~/" ]]; then
-HOME_SHORTCUT=0; fi;
+    HOME_SHORTCUT=0; fi;
 
 echo; echo "Save minified JSON file to:";
 read -ei "$JSONFILE" MINIFIEDJSON;
 
-while [ "$MINIFIEDJSON" == "$JSONFILE" ] || [ $(verifyJson "$MINIFIEDJSON") == 1 ]; do
+while [ "$MINIFIEDJSON" == "$JSONFILE" ] || [ `verifyJson "$MINIFIEDJSON"` == 1 ]; do
     if [ "$MINIFIEDJSON" == "$JSONFILE" ]; then
-        echo; echo "`toRed ERROR`: cannot overwrite source file $(toYellow "$JSONFILE")";
+        echo; echo "`toRed ERROR`: cannot overwrite source file `toYellow "$JSONFILE"`";
         echo; echo "Please rename the target minified file or save it to another folder:";
         read -ei "`echo "$MINIFIEDJSON"`" MINIFIEDJSON;
         elif [ `verifyJson "$MINIFIEDJSON"` == 1 ]; then
@@ -83,12 +83,12 @@ else
     HOME_SHORTCUT=1; fi;
 
 if [[ $HOME_SHORTCUT == 0 ]]; then
-    MINIFIEDJSON=$(parseHomeFrom~ $MINIFIEDJSON); fi;
+    MINIFIEDJSON=`parseHomeFrom~ $MINIFIEDJSON`; fi;
 
 echo; echo -n " * Checking if target file exists...    ";
 
-if [ -w $(realpath -q "$MINIFIEDJSON") ]; then
-    echo "[$(toGreen OK)]";
+if [ -w `realpath -q "$MINIFIEDJSON"` ]; then
+    echo "[`toGreen OK`]";
 
     echo -n "Is file overwriting allowed? (Y/N) ";
     read OPTION;
@@ -97,62 +97,62 @@ if [ -w $(realpath -q "$MINIFIEDJSON") ]; then
     NO=(N n);
     NEWFILE=maybe;
     while [[ ! "${OPTIONS[*]}" =~ "${OPTION}" ]]; do
-        echo; echo -n "$(toRed ERROR): invalid option, choose [Y]es or [N]o: ";
+        echo; echo -n "`toRed ERROR`: invalid option, choose [Y]es or [N]o: ";
         read OPTION; done;
 
     if [[ "${YES[*]}" =~ "${OPTION}" ]]; then
         echo; echo " * File will be overwritten...";
     elif [[ "${NO[*]} " =~ "${OPTION}" ]]; then
         NEWFILE="$MINIFIEDJSON";
-        while [[ "$NEWFILE" == "$MINIFIEDJSON" || -w $(realpath -q "$NEWFILE") ]]; do
+        while [[ "$NEWFILE" == "$MINIFIEDJSON" || -w `realpath -q "$NEWFILE"` ]]; do
             echo; echo "Save minified JSON file to: ";
             if [[ $HOME_SHORTCUT == 0 ]]; then
-                NEWFILE=$(parse~FromHome $NEWFILE); fi;
-            read -ei $(echo "$NEWFILE") NEWFILE;
+                NEWFILE=`parse~FromHome $NEWFILE`; fi;
+            read -ei `echo "$NEWFILE"` NEWFILE;
             if [[ ${NEWFILE:0:2} == "~/" ]]; then
                 HOME_SHORTCUT=0;
             else
                 HOME_SHORTCUT=1; fi;
             if [[ $HOME_SHORTCUT == 0 ]];
             then
-                NEWFILE="$(parseHomeFrom~ $NEWFILE)"; fi;
-            if [[ "$NEWFILE" == "$MINIFIEDJSON" || -w $(realpath -q "$NEWFILE") ]]; then
+                NEWFILE="`parseHomeFrom~ $NEWFILE`"; fi;
+            if [[ "$NEWFILE" == "$MINIFIEDJSON" || -w `realpath -q "$NEWFILE"` ]]; then
                 echo; echo "`toRed ERROR`: files already exists and overwriting is disabled.";
                 echo "Please rename the file or save it to another folder:";
             else
                 break; fi; done;
 
-        while [ $(verifyJson "$NEWFILE") == 1 ]; do
-            echo; echo "$(toRed ERROR): minified JSON file extension must be '$(toYellow .json)'";
+        while [ `verifyJson "$NEWFILE"` == 1 ]; do
+            echo; echo "`toRed ERROR`: minified JSON file extension must be '`toYellow .json`'";
             echo; echo "Please rename the target minified file or save it to another folder:";
-            read -ei $(echo "$NEWFILE") NEWFILE;
+            read -ei `echo "$NEWFILE"` NEWFILE;
             if [[ ${NEWFILE:0:2} == "~/" ]]; then
                 HOME_SHORTCUT=0; fi;
             if [[ $HOME_SHORTCUT == 0 ]]; then
-                NEWFILE="$(parseHomeFrom~ $NEWFILE)"; fi;
+                NEWFILE="`parseHomeFrom~ $NEWFILE`"; fi;
             touch $(realpath -q "$NEWFILE"); done;
 
         echo; echo " * File will be created...";
 
         MINIFIEDJSON="$NEWFILE";
-        MINIFIEDJSON=$(parseHomeFrom~ $MINIFIEDJSON);
-        touch $(realpath -q $MINIFIEDJSON); fi;
+        MINIFIEDJSON=`parseHomeFrom~ $MINIFIEDJSON`;
+        touch `realpath -q $MINIFIEDJSON`; fi;
 
-elif [ ! -f "$(realpath -q "$MINIFIEDJSON")" ]; then
+elif [ ! -f "`realpath -q "$MINIFIEDJSON"`" ]; then
     echo "[NO]";
     echo " * File will be created..."
-    touch "$(realpath -q $MINIFIEDJSON)"; fi;
+    touch "`realpath -q $MINIFIEDJSON`"; fi;
 
-JSONFILE=$(parseHomeFrom~ "$JSONFILE");
+JSONFILE=`parseHomeFrom~ "$JSONFILE"`;
 echo; echo -n " * Minifying JSON file...               "
-python3 /usr/local/lib/verify-minify-json/minify.py "$(realpath -q "$JSONFILE")" | cat > "$(realpath -q "$MINIFIEDJSON")";
-echo "[$(toGreen OK)]";
+python3 /usr/local/lib/verify-minify-json/minify.py "`realpath -q "$JSONFILE"`" | cat > "`realpath -q "$MINIFIEDJSON"`";
+echo "[`toGreen OK`]";
 
 echo -n " * Checking minified output file...     ";
-if [ $(verifyJson "$MINIFIEDJSON") != 0 ]; then
-    echo "$(toRed ERROR): minified JSON validation failed";
+if [ `verifyJson "$MINIFIEDJSON"` != 0 ]; then
+    echo "`toRed ERROR`: minified JSON validation failed";
 else
-    echo "[$(toGreen OK)]"; fi;
+    echo "[`toGreen OK`]"; fi;
 
-echo; echo "File saved to `toYellow $(realpath -q "$MINIFIEDJSON")`";
+		echo; echo "File saved to `toYellow $(realpath -q "$MINIFIEDJSON")`";
 exit 0;

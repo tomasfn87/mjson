@@ -13,7 +13,7 @@ toYellow() { gawk -v text="$1" 'BEGIN {
 }
 
 if [ "$1" == "$2" ]; then
-    echo "$(toRed ERROR): cannot overwrite source file `toYellow "$2"`";
+    echo "`toRed ERROR`: cannot overwrite source file `toYellow "$2"`";
     echo "Please rename the minified file or save it to another folder";
     exit 1; fi;
 
