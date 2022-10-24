@@ -5,7 +5,7 @@ import sys
 def isExtensionJson(file):
     if not file:
         return False
-    REJsonExtension = r"\.json$"
+    REJsonExtension = r"(?i)\.json$"
     return bool(re.search(REJsonExtension, file))
 
 def verify(file):
