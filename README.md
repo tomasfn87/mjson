@@ -18,15 +18,15 @@ _Tools to verify and minify `JSON` files_
 
 ### *Install*
 
-```bash
-sudo git clone --depth 1 https://github.com/tomasfn87/verify-minify-json /usr/local/lib/verify-minify-json && sudo rm -rf /usr/local/lib/verify-minify-json/{.git,README.md,sample*} && sudo ln -s /usr/local/lib/verify-minify-json/minify_json_interactive.sh /usr/local/bin/mjsoni && sudo ln -s /usr/local/lib/verify-minify-json/minify_json.sh /usr/local/bin/mjson && sudo ln -s /usr/local/lib/verify-minify-json/verify_json.sh /usr/local/bin/vjson && echo "\nUse commands vjson, mjson and mjsoni to verify (CLI) and minify (CLI and CLI interactive)."
+```shell
+sudo git clone --depth 1 https://github.com/tomasfn87/verify-minify-json /usr/local/lib/verify-minify-json && sudo rm -rf /usr/local/lib/verify-minify-json/{minify.sh,.git,README.md,sample*} && sudo ln -rs /usr/local/lib/verify-minify-json/minify_json_interactive.sh /usr/local/bin/mjsoni && sudo ln -rs /usr/local/lib/verify-minify-json/minify_json.sh /usr/local/bin/mjson && sudo ln -rs /usr/local/lib/verify-minify-json/verify_json.sh /usr/local/bin/vjson && echo "\nUse commands vjson, mjson and mjsoni to verify (CLI) and minify (CLI and CLI interactive)."
 ```
 
 ---
 
 ### *Uninstall*
 
-```bash
+```shell
 sudo rm -rf /usr/local/lib/verify-minify-json /usr/local/bin/[vm]json*
 ```
 
@@ -34,8 +34,8 @@ sudo rm -rf /usr/local/lib/verify-minify-json /usr/local/bin/[vm]json*
 
 ### *Update*
 
-```bash
-sudo rm -rf /usr/local/lib/verify-minify-json && sudo git clone --depth 1 https://github.com/tomasfn87/verify-minify-json /usr/local/lib/verify-minify-json && sudo rm -rf /usr/local/lib/verify-minify-json/{.git,README.md,sample*} && echo "\nvjson, mjson and mjsoni were updated to the latest version."
+```shell
+sudo rm -rf /usr/local/lib/verify-minify-json && sudo git clone --depth 1 https://github.com/tomasfn87/verify-minify-json /usr/local/lib/verify-minify-json && sudo rm -rf /usr/local/lib/verify-minify-json/{minify.sh,.git,README.md,sample*} && echo "\nvjson, mjson and mjsoni were updated to the latest version."
 ```
 
 ---
@@ -48,7 +48,7 @@ sudo rm -rf /usr/local/lib/verify-minify-json && sudo git clone --depth 1 https:
 
 #### Sample CLI usage:
 
-```bash
+```shell
 vjson /home/user/json_files/sample.json
 ```
 
@@ -64,7 +64,7 @@ vjson /home/user/json_files/sample.json
 
 #### Sample CLI usage:
 
-```bash
+```shell
 mjson /home/user/json_files/sample.json /home/user/json_files/sample.min.json
 ```
 
@@ -78,6 +78,6 @@ mjson /home/user/json_files/sample.json /home/user/json_files/sample.min.json
 
 #### Sample CLI usage:
 
-```bash
+```shell
 mjsoni
 ```
