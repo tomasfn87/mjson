@@ -104,7 +104,9 @@ if [ -w `realpath -q "$MINIFIEDJSON"` ]; then
         echo " * File will be overwritten...";
     elif [[ "${NO[*]} " =~ "${OPTION}" ]]; then
         NEWFILE="$MINIFIEDJSON";
-        while [[ "$NEWFILE" == "$MINIFIEDJSON" || -w `realpath -q "$NEWFILE"` ]]; do
+        while [[ "$NEWFILE" == "$MINIFIEDJSON"
+            || -w `realpath -q "$NEWFILE"`
+            || `verifyJson "$NEWFILE"` == 1 ]]; do
             echo; echo "Save minified JSON file to: ";
             if [[ $HOME_SHORTCUT == 0 ]]; then
                 NEWFILE=`parse~FromHome $NEWFILE`; fi;
@@ -118,18 +120,13 @@ if [ -w `realpath -q "$MINIFIEDJSON"` ]; then
             if [[ "$NEWFILE" == "$MINIFIEDJSON" || -w `realpath -q "$NEWFILE"` ]]; then
                 echo "`toRed ERROR`: files already exists and overwriting is disabled.";
                 echo; echo "Please rename the file or save it to another folder:";
+            elif [ `verifyJson "$NEWFILE"` == 1 ]; then
+                echo "`toRed ERROR`: minified JSON file extension must be '`toYellow .json`'";
+                echo; echo "Please rename the target minified file or save it to another folder:";
             else
                 break; fi; done;
 
-        while [ `verifyJson "$NEWFILE"` == 1 ]; do
-            echo "`toRed ERROR`: minified JSON file extension must be '`toYellow .json`'";
-            echo; echo "Please rename the target minified file or save it to another folder:";
-            read -ei `echo "$NEWFILE"` NEWFILE;
-            if [[ ${NEWFILE:0:2} == "~/" ]]; then
-                HOME_SHORTCUT=0; fi;
-            if [[ $HOME_SHORTCUT == 0 ]]; then
-                NEWFILE="`parseHomeFrom~ $NEWFILE`"; fi;
-            touch $(realpath -q "$NEWFILE"); done;
+        touch $(realpath -q "$NEWFILE");
 
         echo " * File will be created...";
 
