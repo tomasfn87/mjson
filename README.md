@@ -19,7 +19,7 @@ _Tools to verify and minify `JSON` files_
 ### *Install*
 
 ```shell
-sudo git clone --depth 1 https://github.com/tomasfn87/verify-minify-json /usr/local/lib/verify-minify-json && sudo rm -rf /usr/local/lib/verify-minify-json/{minify.sh,.git,README.md,sample*} && sudo ln -rs /usr/local/lib/verify-minify-json/minify_json_interactive.sh /usr/local/bin/mjsoni && sudo ln -rs /usr/local/lib/verify-minify-json/minify_json.sh /usr/local/bin/mjson && sudo ln -rs /usr/local/lib/verify-minify-json/verify_json.sh /usr/local/bin/vjson && echo "\nUse commands vjson, mjson and mjsoni to verify (CLI) and minify (CLI and CLI interactive)."
+sudo git clone --depth 1 --no-checkout https://github.com/tomasfn87/verify-minify-json /usr/local/lib/verify-minify-json && pushd /usr/local/lib/verify-minify-json && sudo git sparse-checkout set {verify_json,minify_json,minify_json_interactive}.sh {verify_json,minify}.py && sudo git checkout && sudo ln -rs /usr/local/lib/verify-minify-json/minify_json_interactive.sh /usr/local/bin/mjsoni && sudo ln -rs /usr/local/lib/verify-minify-json/minify_json.sh /usr/local/bin/mjson && sudo ln -rs /usr/local/lib/verify-minify-json/verify_json.sh /usr/local/bin/vjson && popd && echo "\nUse commands vjson, mjson and mjsoni to verify (CLI) and minify (CLI and CLI interactive)."
 ```
 
 ---
@@ -27,7 +27,7 @@ sudo git clone --depth 1 https://github.com/tomasfn87/verify-minify-json /usr/lo
 ### *Uninstall*
 
 ```shell
-sudo rm -rf /usr/local/lib/verify-minify-json /usr/local/bin/[vm]json*
+sudo rm -rf /usr/local/lib/verify-minify-json /usr/local/bin/[vm]json{,i}
 ```
 
 ---
@@ -35,7 +35,7 @@ sudo rm -rf /usr/local/lib/verify-minify-json /usr/local/bin/[vm]json*
 ### *Update*
 
 ```shell
-sudo rm -rf /usr/local/lib/verify-minify-json && sudo git clone --depth 1 https://github.com/tomasfn87/verify-minify-json /usr/local/lib/verify-minify-json && sudo rm -rf /usr/local/lib/verify-minify-json/{minify.sh,.git,README.md,sample*} && echo "\nvjson, mjson and mjsoni were updated to the latest version."
+sudo rm -rf /usr/local/lib/verify-minify-json && sudo git clone --depth 1 --no-checkout https://github.com/tomasfn87/verify-minify-json /usr/local/lib/verify-minify-json && pushd /usr/local/lib/verify-minify-json && sudo git sparse-checkout set {verify_json,minify_json,minify_json_interactive}.sh {verify_json,minify}.py && sudo git checkout && popd && echo "\nvjson, mjson and mjsoni were updated to the latest version."
 ```
 
 ---
