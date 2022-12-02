@@ -42,7 +42,7 @@ sudo rm -rf /usr/local/lib/verify-minify-json && sudo git clone --depth 1 --no-c
 
 <br><br>
 
-## 1) verify_json.sh
+## 1) `verify_json.sh`
   * receives one argument via CLI: a `JSON` file path, and checks if file extension is `.json`; if true, then it will verify if the content is valid `JSON` data
 
 
@@ -53,7 +53,7 @@ vjson /home/user/json_files/sample.json
 ```
 
 ---
-## 2) minify_json.sh
+## 2) `minify_json.sh`
   * receives two arguments via CLI: a source `JSON` file path and a target `JSON` file path
   * checks if the source file is a valid `JSON` file
   * removes spaces, tabs and line escapes outside of strings to reduce overall file size
@@ -69,7 +69,7 @@ mjson /home/user/json_files/sample.json /home/user/json_files/sample.min.json
 ```
 
 ---
-## 3) minify_json_interactive.sh
+## 3) `minify_json_interactive.sh`
   * does basically the same thing as 2), but in an interactive manner; no arguments can be passed when running the `mjsoni` command: the script will prompt for the input and output files
   * it the target file already exists, the user is asked if file overwritting should be allowed; if answer is No, it will prompt for a new file name, and won't allow any files to be overwritten from this point on, and the command will ask the user to either rename or save the file to another folder until a valid answer is provided
   * if there's an error, the script warns the user and prompts for a correct option until one is provided
